@@ -19,11 +19,12 @@ export default {
   methods: {
     getProjects() {
       let paramsObject = { ...this.store.axiosGetObject };
-      paramsObject.url = '/projects'
+      paramsObject.url = '/api/projects'
       console.log(paramsObject);
       axios(paramsObject)
         .then(response => {
           console.log(response);
+          this.store.data.projects = response.data.results;
         })
     }
   },
@@ -37,7 +38,7 @@ export default {
 <template>
   <body>
     <AppHeader></AppHeader>
-    <AppMain></AppMain>
+    <AppMain :projects="store.data.projects"></AppMain>
   </body>
 </template>
 
