@@ -17,19 +17,24 @@ export default {
     }
   },
   methods: {
-    getProjects() {
+    getProjects(page) {
       let paramsObject = { ...this.store.axiosGetObject };
-      paramsObject.url = '/api/projects'
-      console.log(paramsObject);
+      paramsObject.url = '/api/projects';
+      paramsObject.params = {
+        page,
+      }
+      // console.log(paramsObject);
       axios(paramsObject)
         .then(response => {
-          console.log(response);
-          this.store.data.projects = response.data.results;
+          // console.log(response);
+          this.store.data.projects = response.data.results.data;
+          this.store.data.pages.current = response.data.results.current_page;
+          this.store.data.pages.last = response.data.results.last_page;
         })
     }
   },
   mounted() {
-    this.getProjects();
+    this.getProjects(1);
   },
 }
 
@@ -38,7 +43,10 @@ export default {
 <template>
   <body>
     <AppHeader></AppHeader>
-    <AppMain :projects="store.data.projects"></AppMain>
+    <AppMain 
+    :projects="store.data.projects"
+    @clickOnPage="getProjects"
+    ></AppMain>
   </body>
 </template>
 
