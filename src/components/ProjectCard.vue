@@ -1,16 +1,22 @@
 <template>
     <div class="card h-100 one-card text-bg-dark border-white">
-        <img :src="getCardImg" class="card-img-top" :alt="cardData.title">
+        <div class="img-fluid h-50">
+            <img :src="getCardImg" class="card-img-top h-100" :alt="cardData.title">
+        </div>
         <div class="card-body">
             <h5 class="card-title">{{ cardData.title }}</h5>
-            <p class="card-text">{{ cardData.description }}</p>
+            <p class="card-text">{{ truncateText(cardData.description) }}</p>
             <p class="card-text"> {{ cardData.type?.name }}</p>
             <p class="card-text">
                 <span v-for="technology in cardData.technologies" class="badge rounded-pill text-bg-secondary me-1">
                     {{ technology.name }}
                 </span>
             </p>
-
+        </div>
+        <div class="card-footer text-center">
+            <router-link :to="{name: 'project-single', params: {slug: cardData.slug}}" class="btn btn-secondary">
+                Learn more about this project
+            </router-link>
         </div>
     </div>
 </template>
@@ -23,6 +29,7 @@ export default {
     data() {
         return {
             store,
+            contentMaxLength: 100,
         }
     },
     computed: {
@@ -38,6 +45,14 @@ export default {
             }
             return imgUrl
         }
+    },
+    methods: {
+        truncateText(text) {
+                if (text && text.length > this.contentMaxLength) {
+                    return text.substr(0, this.contentMaxLength) + '...';
+                }
+                return text;
+            }
     },
     props: {
         cardData: Object,
