@@ -2,19 +2,12 @@
     <header class="mb-3">
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container py-2">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        <a class="nav-link" href="#">Features</a>
-                        <a class="nav-link" href="#">Pricing</a>
-                        <a class="nav-link disabled">Disabled</a>
-                    </div>
-                </div>
+                <span class="navbar-brand fs-3 fw-semibold me-5">Boolfolio</span>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li  v-for="link in menu" class="nav-item">
+                        <router-link :to="{name: link.routeName}" class="nav-link">{{link.label}}</router-link>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -24,6 +17,28 @@
 
 export default {
     name: 'AppHeader',
+    data() {
+        return {
+            menu: [
+                {
+                    label: 'Home',
+                    routeName: 'home'
+                },
+                {
+                    label: 'Repository',
+                    routeName: 'projects'
+                },
+                {
+                    label: 'Get in touch',
+                    routeName: 'contact'
+                },
+                {
+                    label: 'About us',
+                    routeName: 'about'
+                },
+            ]
+        }
+    },
 }
 
 </script>
