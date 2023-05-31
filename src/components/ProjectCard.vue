@@ -19,7 +19,7 @@
 import { store } from '../store/store';
 
 export default {
-    name: 'OneCard',
+    name: 'ProjectCard',
     data() {
         return {
             store,
