@@ -61,7 +61,11 @@
                 .then(response => {
                     // console.log(response);
                         this.project = response.data.project;
-                    });
+                    })
+                .catch(error => {
+                    // console.log(error);
+                    this.$router.push({name: 'not-found'})
+                });
         }
     }
 </script>

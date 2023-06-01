@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>
-            Get in touch.
+        <h1 class="display-1 text-center my-5">
+            Get in touch
         </h1>
     </div>
 </template>

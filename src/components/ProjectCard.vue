@@ -1,8 +1,6 @@
 <template>
     <div class="card h-100 one-card text-bg-dark border-white">
-        <div class="img-fluid h-50">
-            <img :src="getCardImg" class="card-img-top h-100" :alt="cardData.title">
-        </div>
+        <img :src="getCardImg" class="card-img-top w-100" :alt="cardData.title">
         <div class="card-body">
             <h5 class="card-title">{{ cardData.title }}</h5>
             <p class="card-text">{{ truncateText(cardData.description) }}</p>
