@@ -23,7 +23,12 @@
             {{ project.description }}
         </p>
 
-
+        <div v-if="project.title != lastProject.title" class="container text-center">
+            <router-link :to="{name: 'project-single', params: {slug: lastProject.slug}}" class="btn btn-secondary">
+                Check out our last project
+            </router-link>
+        </div>
+        
     </div>
 </template>
 
@@ -36,6 +41,7 @@
             return {
                 store,
                 project: {},
+                lastProject: {},
             }
         },
         computed: {
@@ -50,22 +56,37 @@
                     }
                 }
                 return imgUrl
+            },
+        },
+        methods: {
+            getProject(slug){
+                let paramsObject = { ...this.store.axiosGetObject };
+                paramsObject.url = `/api/project/${slug}`;
+                // console.log(paramsObject);
+                axios(paramsObject)
+                    .then(response => {
+                        // console.log(response);
+                        if(slug == 'last'){
+                            this.lastProject = response.data.project;
+                        } else {
+                            this.project = response.data.project;
+                        }
+                    })
+                    .catch(error => {
+                        // console.log(error);
+                        this.$router.push({name: 'not-found'})
+                    });
+            },
+        },
+        watch: {
+            '$route.params.slug'(newSlug, oldSlug){
+                this.getProject(newSlug)
             }
+
         },
         mounted() {
-            const slug = this.$route.params.slug;
-            let paramsObject = { ...this.store.axiosGetObject };
-            paramsObject.url = `/api/project/${slug}`;
-            // console.log(paramsObject);
-            axios(paramsObject)
-                .then(response => {
-                    // console.log(response);
-                        this.project = response.data.project;
-                    })
-                .catch(error => {
-                    // console.log(error);
-                    this.$router.push({name: 'not-found'})
-                });
+            this.getProject(this.$route.params.slug),
+            this.getProject('last')
         }
     }
 </script>
